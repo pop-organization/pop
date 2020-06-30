@@ -1,9 +1,14 @@
 package com.pop.services;
 
+import java.util.List;
+
 import com.pop.domain.UpperCase;
+import com.pop.dto.OutPutInfo;
 
 public interface UpperCaseService {
 	
-	public UpperCase findText (UpperCase upperCaseDto);	
-	public UpperCase insertText (UpperCase upperCaseDto);	
+	public OutPutInfo findText (String upperCaseDto);	
+	public OutPutInfo insertText (UpperCase upperCaseDto);	
+	
+	public List<UpperCase> findAllText();	
 }

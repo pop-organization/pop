@@ -1,5 +1,7 @@
 package com.pop.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pop.domain.UpperCase;
+import com.pop.dto.OutPutInfo;
 import com.pop.services.UpperCaseService;
 
 import lombok.val;
 import lombok.extern.log4j.Log4j2;
-import static com.pop.controller.UpperCaseController.*;
 
 @Log4j2
 @RestController
-@RequestMapping("api/v1/transformations")
-public class UpperCaseControllerImpl {
+@RequestMapping("/api/v1/transformations-to-uppercase")
+public class UpperCaseControllerImpl implements UpperCaseController {
 		
 	private UpperCaseService upperCaseService;
 	
@@ -28,33 +30,34 @@ public class UpperCaseControllerImpl {
 		this.upperCaseService = upperCaseService;
 	}
 	
-	/**
-	 * endPoint for test
-	 * @return
-	 */
 	@GetMapping("/ping")
+	@Override
 	public String ping() {
 		return "OK";
 	}
 	
-	/**
-	 * Insert a uppercase text in database
-	 */
-	@PostMapping
-	public ResponseEntity<UpperCase> insertText (@RequestParam("text") String text) {
+	@PostMapping("/single-text")
+	@Override
+	public ResponseEntity<OutPutInfo> insertText (@RequestParam("text") String text) {
 		log.info(INPUT_CREATE, text);							
 		val upperCaseDto = upperCaseService.insertText(new UpperCase(text));			
-		return new ResponseEntity<UpperCase>(upperCaseDto, HttpStatus.OK);
+		return new ResponseEntity<OutPutInfo>(upperCaseDto, HttpStatus.CREATED);
 	}
 	
-	/**
-	 * Search for text in database
-	 */
-	@GetMapping
-	public ResponseEntity<UpperCase> findText (@RequestParam("text") String text) {
+	@GetMapping("/single-text")
+	@Override
+	public ResponseEntity<OutPutInfo> findText (@RequestParam("text") String text) {
 		log.info(INPUT_SEARCH, text);
-		val upperCaseDto = upperCaseService.findText(new UpperCase(text));		
-		return new ResponseEntity<UpperCase>(upperCaseDto, HttpStatus.OK);
+		val upperCaseDto = upperCaseService.findText(new UpperCase(text).getUppercase());		
+		return new ResponseEntity<OutPutInfo>(upperCaseDto, HttpStatus.OK);
+	}
+	
+	@GetMapping
+	@Override
+	public ResponseEntity<List<UpperCase>> findAllText (String text) {
+		log.info(INPUT_SEARCH_ALL, text);
+		List<UpperCase> upperCaseList = upperCaseService.findAllText();
+		return new ResponseEntity<List<UpperCase>>(upperCaseList, HttpStatus.OK);
 	}
 		
 }

@@ -21,9 +21,9 @@ import lombok.Setter;
 public class UpperCaseJpa implements Serializable {
 	
 	public UpperCaseJpa() {}		
-	public UpperCaseJpa (String original, String modified) {
+	public UpperCaseJpa (String original, String uppercase) {
 		this.original = original;
-		this.modified = modified;
+		this.uppercase = uppercase;
 	}
 		
 	@Id @GeneratedValue(generator="system-uuid")
@@ -35,10 +35,10 @@ public class UpperCaseJpa implements Serializable {
 	private String original;
 	
 	@Column(name = "modified")
-	private String modified;
+	private String uppercase;
 	
 	@Column(name = "date_insert")
 	private Date dateInsert;
-	
+		
 	private static final long serialVersionUID = 1075978726650215522L;
 }

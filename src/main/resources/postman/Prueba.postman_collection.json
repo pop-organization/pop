@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "7993f564-f95c-4cc6-b711-50e4a3b2762d",
+		"name": "Prueba",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Insertar Texto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/transformations-to-uppercase/single-text?text=Hello folkS",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transformations-to-uppercase",
+						"single-text"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "Hello folkS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recuperar Texto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/transformations-to-uppercase/single-text?text=hola mundo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transformations-to-uppercase",
+						"single-text"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "hola mundo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/transformations-to-uppercase/ping",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transformations-to-uppercase",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All_texts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/transformations-to-uppercase",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transformations-to-uppercase"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

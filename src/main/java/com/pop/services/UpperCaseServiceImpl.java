@@ -1,5 +1,6 @@
 package com.pop.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,48 +8,51 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pop.domain.UpperCase;
+import com.pop.dto.OutPutInfo;
 import com.pop.jpa.UpperCaseJpa;
 import com.pop.repositories.UpperCaseRepository;
-import com.pop.utils.OrikaMapper;
+import com.pop.utils.MapperUtil;
 
 @Service
 public class UpperCaseServiceImpl implements UpperCaseService {
 	
 	private UpperCaseRepository upperCaseRepository;	
-	private OrikaMapper orika;
+	private MapperUtil mapper;
 	
 	@Autowired
-	public UpperCaseServiceImpl (UpperCaseRepository upperCaseRepository,  OrikaMapper orika) {
+	public UpperCaseServiceImpl (UpperCaseRepository upperCaseRepository,  MapperUtil mapperUtil) {
 		this.upperCaseRepository = upperCaseRepository;
-		this.orika = orika;
+		this.mapper = mapperUtil;
 	}	
+	
+	@Override
+	public OutPutInfo findText (String uppercase) {
+		OutPutInfo outPutInfo = null;
+				
+		Optional<UpperCaseJpa> optional = upperCaseRepository.findByUppercase(uppercase);		
+		if (optional != null && optional.isPresent()) {			
+			outPutInfo = mapper.mapToOutPutInfo(optional.get(), "String exists in database");										
+		}
+				
+		return outPutInfo;
+	}
 	
 	@Transactional
 	@Override
-	public UpperCase insertText (UpperCase upperCase) {
-		UpperCase fromDd = findText(upperCase);		
-		if (fromDd == null) {
-			UpperCaseJpa upperCaseJpa = orika.getMapper().map(upperCase, UpperCaseJpa.class);
-			upperCaseRepository.save(upperCaseJpa);			
-			fromDd = orika.getMapper().map(upperCaseJpa, UpperCase.class);
-		}
-		
-		return fromDd;
+	public OutPutInfo insertText (UpperCase upperCase) {
+		OutPutInfo outPutInfo = findText(upperCase.getUppercase());		
+		if (outPutInfo == null) {
+			UpperCaseJpa upperCaseJpa = mapper.mapToUpperCaseJpa(upperCase);
+			upperCaseRepository.save(upperCaseJpa);						
+			outPutInfo = mapper.mapToOutPutInfo(upperCaseJpa, "Insert OK");
+		} 				
+		return outPutInfo;
 	}
-
-	/**
-	 * Find original text
-	 */
+	
 	@Override
-	public UpperCase findText (UpperCase upperCase) {
-		UpperCase found = null;
-				
-		Optional<UpperCaseJpa> optional = upperCaseRepository.findByOriginal(upperCase.getOriginal());		
-		if (optional.isPresent()) {
-			found = orika.getMapper().map(optional.get(), UpperCase.class);
-		}
-				
-		return found;
+	public List<UpperCase> findAllText() {
+		List<UpperCaseJpa> upperCaseJpaList = upperCaseRepository.findAll();
+		return mapper.mapToUpperCaseList(upperCaseJpaList);
 	}
 
 }

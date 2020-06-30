@@ -23,13 +23,14 @@ public class UpperCase implements Serializable {
 	
 	public UpperCase() {}
 	public UpperCase (String original) {
-		convertToLower(original);
-		this.modified = original.toUpperCase();
+		validations(original);
+		this.uppercase = original.toUpperCase();
+		dateInsert = new Date();
 	}
 
 	private String id;
 	private String original;
-	private String modified;
+	private String uppercase;
 	private Date dateInsert;
 	
 	/**
@@ -37,10 +38,10 @@ public class UpperCase implements Serializable {
 	 * Eval if not longer than max_long cte
 	 * @param original
 	 */
-	private void convertToLower (String original) {
+	private void validations (String original) {
 		if (isNotBlank(original)) {
 			if (original.length() < MAX_LONG) {
-				this.original = original.toLowerCase();
+				this.original = original;
 			} else throw new PopException(format(ERROR_MAX_LONG, MAX_LONG));
 		} else throw new PopException(EMPTY_NULL);
 	}

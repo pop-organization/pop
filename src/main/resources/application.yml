@@ -1,6 +1,8 @@
 spring:
   application:
     name: pop
+  jackson:
+    time-zone: Europe/Madrid
     
 # datasource configuration 
   datasource:
@@ -29,6 +31,7 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
 
 
 

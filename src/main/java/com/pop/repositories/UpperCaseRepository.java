@@ -8,6 +8,6 @@ import com.pop.jpa.UpperCaseJpa;
 
 public interface UpperCaseRepository extends JpaRepository <UpperCaseJpa, String> {
 	
-	public Optional<UpperCaseJpa> findByOriginal (String text);
+	public Optional<UpperCaseJpa> findByUppercase (String text);
 
 }

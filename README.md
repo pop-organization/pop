@@ -3,9 +3,10 @@
 ### A) Follow theses steps to run project
 1. git pull git@github.com:Pop-POC/demo.git
 2. sudo docker-compose up --build
+3. if you want to run in host-local app and docker-mariadb, you must change url value 'mariadb' to 'localhost'
 
 ### B) Follow theses instructions to run unit tests
-1. if you want to run all tests: mvn test
+1. For run all tests: mvn test
 2. if you want to run concrete test (in this project there are two jUnit classes test) por example: mvnw -Dtest=SpringPopApplicationServicesTests test
 
 ### C) Examples endPoint, you can use postman or other client-http like curl utility

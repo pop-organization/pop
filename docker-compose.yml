@@ -1,0 +1,33 @@
+version: '3.1'
+
+services: 
+# MARIADB
+  mariadb:
+    image: mariadb:10.5
+    networks:
+      - spring-boot-mysql-network
+    container_name: mariadb-words
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: sergio     
+    volumes:
+    - ./src/main/resources/script/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+#    - ./mariadb/mount:/var/lib/mysql
+
+# POP-APP
+  web-service:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-boot-mysql-network
+    depends_on:
+      - mariadb
+      
+networks:
+  spring-boot-mysql-network:
+    driver: bridge

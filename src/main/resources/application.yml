@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: pop
+    
+# datasource configuration 
+  datasource:
+    url: jdbc:mysql://mariadb:3306/POP
+    username: root
+    password: sergio
+    driver-class-name: org.mariadb.jdbc.Driver 
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDB53Dialect
+
+server: 
+  port: 8080
+  
+logging:
+  file:
+    name: /tmp/pop-app.log
+
+  level:
+    org:
+      springframework: DEBUG
+      hibernate:
+        sql: INFO
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+
+
+ 
+  

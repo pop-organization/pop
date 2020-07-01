@@ -24,7 +24,7 @@ public class UpperCase implements Serializable {
 	public UpperCase() {}
 	public UpperCase (String original) {
 		validations(original);
-		this.uppercase = original.toUpperCase();
+		this.uppercase = this.original.toUpperCase();
 		dateInsert = new Date();
 	}
 
@@ -41,7 +41,7 @@ public class UpperCase implements Serializable {
 	private void validations (String original) {
 		if (isNotBlank(original)) {
 			if (original.length() < MAX_LONG) {
-				this.original = original;
+				this.original = original.trim();
 			} else throw new PopException(format(ERROR_MAX_LONG, MAX_LONG));
 		} else throw new PopException(EMPTY_NULL);
 	}

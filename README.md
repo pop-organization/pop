@@ -10,6 +10,9 @@
 2. if you want to run concrete test (in this project there are two jUnit classes test) por example: mvnw -Dtest=SpringPopApplicationServicesTests test
 
 ### C) Examples endPoint, you can use postman or other client-http like curl utility
+```
+There is in src/main/resources a folder with postman collections json
+```
 
 ```
 Retry the text:  

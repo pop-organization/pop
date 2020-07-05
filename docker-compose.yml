@@ -5,7 +5,7 @@ services:
   mariadb:
     image: mariadb:10.5
     networks:
-      - spring-boot-mysql-network
+      - pop-network # need it because default bridge network only works by ip and we want to work by service name
     container_name: mariadb-words
     ports:
       - 3306:3306
@@ -24,10 +24,10 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - spring-boot-mysql-network
+      - pop-network
     depends_on:
       - mariadb
       
 networks:
-  spring-boot-mysql-network:
+  pop-network:
     driver: bridge

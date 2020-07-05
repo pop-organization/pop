@@ -9,6 +9,12 @@ import lombok.Setter;
 @Setter
 public class OutPutInfo {
 	
+	public OutPutInfo () {}
+	public OutPutInfo (String info, String original) {
+		this.info = info;
+		this.original = original;
+	}
+	
 	private String info;
 
 	private String id;

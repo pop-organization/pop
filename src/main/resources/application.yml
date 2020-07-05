@@ -26,11 +26,11 @@ logging:
     org:
       springframework: DEBUG
       hibernate:
-        sql: INFO
+        sql: DEBUG
         type:
           descriptor:
             sql:
-              BasicBinder: TRACE
+              BasicBinder: DEBUG
 
 
 

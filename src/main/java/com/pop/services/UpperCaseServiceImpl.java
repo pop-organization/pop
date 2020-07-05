@@ -19,6 +19,10 @@ public class UpperCaseServiceImpl implements UpperCaseService {
 	private UpperCaseRepository upperCaseRepository;	
 	private MapperUtil mapper;
 	
+	private static final String NOT_EXISTS_DB = "String is not exists in database";
+	private static final String EXISTS = "String exists in database";
+	private static final String INSERT_OK = "Insert OK";
+	
 	@Autowired
 	public UpperCaseServiceImpl (UpperCaseRepository upperCaseRepository,  MapperUtil mapperUtil) {
 		this.upperCaseRepository = upperCaseRepository;
@@ -31,7 +35,9 @@ public class UpperCaseServiceImpl implements UpperCaseService {
 				
 		Optional<UpperCaseJpa> optional = upperCaseRepository.findByUppercase(uppercase);		
 		if (optional != null && optional.isPresent()) {			
-			outPutInfo = mapper.mapToOutPutInfo(optional.get(), "String exists in database");										
+			outPutInfo = mapper.mapToOutPutInfo(optional.get(), EXISTS);										
+		} else  {
+			outPutInfo = new OutPutInfo(NOT_EXISTS_DB, uppercase.toLowerCase());
 		}
 				
 		return outPutInfo;
@@ -41,10 +47,10 @@ public class UpperCaseServiceImpl implements UpperCaseService {
 	@Override
 	public OutPutInfo insertText (UpperCase upperCase) {
 		OutPutInfo outPutInfo = findText(upperCase.getUppercase());		
-		if (outPutInfo == null) {
+		if (outPutInfo.getId() == null) {
 			UpperCaseJpa upperCaseJpa = mapper.mapToUpperCaseJpa(upperCase);
 			upperCaseRepository.save(upperCaseJpa);						
-			outPutInfo = mapper.mapToOutPutInfo(upperCaseJpa, "Insert OK");
+			outPutInfo = mapper.mapToOutPutInfo(upperCaseJpa, INSERT_OK);
 		} 				
 		return outPutInfo;
 	}
